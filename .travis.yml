@@ -1,7 +1,29 @@
 language: scala
+
+sudo: false
+
 env:
   global:
     _JAVA_OPTIONS="-Xmx1500m -XX:MaxPermSize=512m -Dakka.test.timefactor=3"
+
 scala:
    - 2.10.4
-   - 2.11.6
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+
+before_deploy:
+  - sbt ++${TRAVIS_SCALA_VERSION} job-server-extras/assembly
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Hifd7MteGrOnQDUBktHizCuE7CrV3xQf2xM4/TJHnJZSUX4jG0Ln6eV/sj9T4syIS9RQGzKbXXPIsDsWNfDyzfXKm9/2QfiD7RgdiTjI2wTBG1fT0dMJoGGBmEr8QZRYN3W31si3/zvbXOXl0sv6EeGc7BOlztoramIOJfyQCsPJorAngLirPVvCXoW5wF4uU7mEcZGlv5ZqxeB3tQa9uAYuodWNvgMbKnNnEa73Q081Yt6Ti3rkQmq87zmNxRWqr/vRs12xb+q0qcApbZITWTiFp5Ld07g4YiDg2Dz6AjBb3gKvxxMidFM5XnQa0N7/jA1bEcj1n5LsA/jBp2q3lcWhL1V33HHwvUBMwJ0OblvGqx6NH5BgROT1dLVgFQ1P1EV9UeafqUBFQpOuqGYsyKc4NLgSRYWKKVGA/MGwdsJ96Hfb5/IzyxEcg4CTYko43BiZxxUW1ddHMu73gSoioTwWEGtD+lkO60cPb8rE09RUwby4WUJqRoPwqNxEJpeo0cOaztUUddZPVM8aAncMN/usp7rBXurgHIK2TNPsaKtMvY4tYGOnNisMabVUngWHsdHGW7My1u0P3JSGwVkZyex6Wwwxnejknl3Thd3T0FOddZ3gu008XLB6eLbHUBaPSOp/yJMfI2Kfw789dKgOChS6z+Byzrd/9CIOMZxPpmI=
+  file:
+    - job-server-extras/target/scala-2.10/spark-job-server.jar
+  skip_cleanup: true
+  on:
+    repo: azavea/spark-jobserver
+    tags: true
