@@ -20,6 +20,7 @@ See [Troubleshooting Tips](doc/troubleshooting.md) as well as [Yarn tips](doc/ya
 - Frontline Solvers
 - Aruba Networks
 - [Zed Worldwide](http://www.zed.com)
+- [Azavea](http://www.azavea.com)
 
 ## Features
 
